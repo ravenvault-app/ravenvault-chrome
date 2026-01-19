@@ -1,6 +1,6 @@
 # RavenVault Chrome Extension
 
-RavenVault is a Chrome extension that exports Poe.com AI conversations to your local Obsidian vault as clean Markdown files. It works in conjunction with the RavenVault macOS app—the extension captures content from your browser while the app handles conversion and storage. Without the companion app running, exports cannot complete.
+RavenVault is a Chrome extension that exports Poe.com AI conversations to your local Obsidian vault as clean Markdown files. It works in conjunction with the [RavenVault macOS app](https://ravenvault.app/)—the extension captures content from your browser while the app handles conversion and storage. Without the companion app running, exports cannot complete.
 
 This repository contains the complete source code for the Chrome extension. We've open-sourced it so you can audit exactly what runs in your browser and verify that your data stays on your machine.
 
