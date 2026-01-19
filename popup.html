@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      /* COLORS */
+      --rv-primary-400: #a78bfa;
+      --rv-primary-500: #8b5cf6;
+      --rv-primary-600: #7c3aed;
+      --rv-success-400: #4ade80;
+      --rv-success-500: #22c55e;
+      --rv-error-400: #f87171;
+      --rv-error-500: #ef4444;
+      --rv-slate-300: #cbd5e1;
+      --rv-slate-400: #94a3b8;
+      --rv-slate-500: #64748b;
+      --rv-slate-600: #475569;
+      --rv-slate-700: #334155;
+      --rv-slate-800: #1e293b;
+      --rv-text-primary: #ffffff;
+      
+      /* SEMANTIC */
+      --bg: var(--rv-slate-800);
+      --border: var(--rv-slate-700);
+      --text: var(--rv-text-primary);
+      --muted: var(--rv-slate-400);
+      
+      --bg-icon-primary: rgba(139, 92, 246, 0.2);
+      --bg-icon-error: rgba(239, 68, 68, 0.2);
+      --bg-icon-neutral: rgba(100, 116, 139, 0.2);
+      
+      --bg-btn-primary: var(--rv-primary-600);
+      --bg-btn-primary-hover: var(--rv-primary-500);
+      --bg-btn-secondary: var(--rv-slate-700);
+      --bg-btn-secondary-hover: var(--rv-slate-600);
+
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    
+    body {
+      width: 288px;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .container {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Icon */
+    .icon-container {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg-icon-neutral); /* Default */
+    }
+    
+    .icon-busy { background: var(--bg-icon-primary); }
+    .icon-error { background: var(--bg-icon-error); }
+    .icon-neutral { background: var(--bg-icon-neutral); }
+
+    .icon-svg {
+      width: 20px; height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    
+    .icon-busy .icon-svg { color: var(--rv-primary-400); }
+    .icon-error .icon-svg { color: var(--rv-error-400); }
+    .icon-neutral .icon-svg { color: var(--rv-slate-400); }
+
+    /* Content */
+    .content {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 14px; font-weight: 600;
+      color: var(--text);
+    }
+
+    .subtitle {
+      font-size: 14px; color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Actions */
+    .actions {
+      display: flex; gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s ease;
+    }
+
+    .btn.primary {
+      background: var(--bg-btn-primary);
+      color: #ffffff;
+    }
+    .btn.primary:hover { background: var(--bg-btn-primary-hover); }
+
+    .btn.secondary {
+      background: var(--bg-btn-secondary);
+      color: var(--rv-slate-300);
+    }
+    .btn.secondary:hover { background: var(--bg-btn-secondary-hover); }
+
+    .download {
+      margin-top: 4px;
+    }
+    .download a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .download a:hover {
+      color: var(--rv-slate-300);
+    }
+
+    .hidden { display: none !important; }
+    
+    /* Animations */
+    .spin { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="iconContainer" class="icon-container icon-neutral">
+      <!-- Icon SVG injected by JS -->
+      <svg id="iconSvg" class="icon-svg" viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+      </svg>
+    </div>
+
+    <div class="content">
+      <h3 id="popupTitle">Title</h3>
+      <div id="popupStatus" class="subtitle">Subtitle</div>
+    </div>
+
+    <div class="actions">
+      <button id="btnPrimary" class="btn primary hidden">Action</button>
+      <button id="btnSecondary" class="btn secondary hidden">Dismiss</button>
+    </div>
+    <div id="downloadContainer" class="download hidden">
+      <a id="downloadLink" href="https://ravenvault.app" target="_blank" rel="noopener noreferrer">Don't have the app? Download</a>
+    </div>
+  </div>
+  <script src="ui-constants.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
