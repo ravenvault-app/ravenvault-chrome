@@ -223,7 +223,7 @@ async function onHostMessage(msg) {
         }
         
         // 2. Check if App is too old (Extension requirement)
-        // Hardcoded requirement: App must be at least 0.9.0 to support the current IPC protocol.
+        // Hardcoded requirement: App must be at least 0.9.1 to support the current IPC protocol.
         // If the App is older, we block usage to prevent protocol mismatch errors.
         const MIN_APP_VERSION = CONFIG.MIN_APP_VERSION;
         if (appVersion && compareVersions(appVersion, MIN_APP_VERSION) < 0) {
@@ -252,6 +252,19 @@ async function onHostMessage(msg) {
     // 0. Handle App Connection Event
     if (msg.type === 'event' && msg.command === 'app_connected') {
         logCurrentActiveTabURL(true);
+    }
+
+    if (msg.type === 'command' && msg.command === 'close_connect_tab') {
+        (async () => {
+            try {
+                const tabs = await chrome.tabs.query({ url: ['*://ravenvault.app/connect/*'] });
+                if (!tabs || !tabs.length) return;
+                const ids = tabs.map((tab) => tab.id).filter((id) => id !== undefined);
+                if (!ids.length) return;
+                await chrome.tabs.remove(ids);
+            } catch (e) {}
+        })();
+        return;
     }
 
     // 0.5 Handle App-Driven Capture Start
@@ -1245,6 +1258,10 @@ async function startExport(tab, skipValidation = false) {
     });
 }
 
+chrome.runtime.onInstalled.addListener(() => {
+    connectWebSocket();
+});
+
 chrome.runtime.onConnect.addListener((port) => {
     if (port.name === 'keepAlive') {
         port.onMessage.addListener((msg) => {
@@ -1270,6 +1287,21 @@ chrome.runtime.onConnect.addListener((port) => {
              }
         });
     }
+});
+
+chrome.runtime.onMessageExternal.addListener((msg, sender, sendResponse) => {
+  if (!msg || msg.type !== 'ping') {
+      return;
+  }
+  sendResponse({ type: 'pong' });
+
+  // Connect to App (fixes onboarding detection)
+  connectWebSocket();
+
+  if (sender.tab && sender.tab.id !== undefined) {
+      chrome.tabs.remove(sender.tab.id).catch(() => {});
+  }
+  return true;
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {

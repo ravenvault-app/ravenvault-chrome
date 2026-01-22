@@ -14,7 +14,7 @@ RavenVault does not collect, transmit, or store any personal data on external se
 
 ## Local Processing Only
 
-All communication occurs between the browser extension, the desktop app, and the Obsidian plugin—all running locally on your computer. Your conversations never leave your device.
+All communication occurs between the browser extension and the desktop app—both running locally on your computer. Your conversations never leave your device.
 
 ## Contact
 

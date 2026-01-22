@@ -64,8 +64,7 @@ if (typeof UI_CONSTANTS === 'undefined') {
             
             // Version Errors
             APP_OUTDATED: "RavenVault Desktop App is outdated. Please update to continue.",
-            EXTENSION_OUTDATED: "RavenVault Extension is outdated. Please update via Chrome Web Store.",
-            PLUGIN_OUTDATED: "Obsidian Plugin is outdated. Please update via Obsidian Settings."
+            EXTENSION_OUTDATED: "RavenVault Extension is outdated. Please update via Chrome Web Store."
         }
     };
 }

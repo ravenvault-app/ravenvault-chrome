@@ -51,7 +51,7 @@ const CONFIG = {
      * If the App is older than this, usage is blocked to prevent protocol errors.
      * Usage: `CONFIG.MIN_APP_VERSION`
      */
-    MIN_APP_VERSION: "0.9.0"
+    MIN_APP_VERSION: "0.9.1"
 };
 
 // Export for usage in ES modules or direct inclusion

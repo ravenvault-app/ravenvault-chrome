@@ -45,6 +45,7 @@ The extension requests these permissions in `manifest.json`:
 | Host permission: `poe.com` | To run on Poe.com chat pages |
 | Host permission: `poecdn.net` | To download images and attachments from Poe's CDN |
 | Host permission: `localhost` | To communicate with the RavenVault macOS app on your machine |
+| `externally_connectable`: `ravenvault.app` | Allows the RavenVault onboarding page to detect when the extension is installed and complete setup automatically |
 
 The extension does not request permissions for browsing history, bookmarks, downloads, or any other sensitive browser data.
 
